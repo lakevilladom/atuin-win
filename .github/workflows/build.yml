@@ -1,8 +1,13 @@
 name: Build Atuin
+
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 0'  # 每周日 UTC 时间午夜运行
+    - cron: '0 0 * * 0'  # This runs the workflow every Sunday at midnight UTC
+defaults:
+  run:
+    shell: msys2 {0}
+
 jobs:
   build:
     runs-on: windows-latest
@@ -11,19 +16,11 @@ jobs:
         with:
           update: true
           msystem: UCRT64
-      - name: 安装依赖
-        run: pacman -Syu --noconfirm  mingw-w64-ucrt-x86_64-rust mingw-w64-ucrt-x86_64-protobuf
-        
-      - uses: Swatinem/rust-cache@v2
-
-      - name: 克隆仓库并构建
-        run: |
-          git clone https://github.com/atuinsh/atuin.git
-          cd atuin
-          cargo build --release
-
-      - name: 上传制品
+      - run: pacman --noconfirm -Syu mingw-w64-ucrt-x86_64-rust mingw-w64-ucrt-x86_64-protobuf # protobuf is needed by atuin
+      - uses: Swatinem/rust-cache@v2  
+      - run: git clone https://github.com/atuinsh/atuin.git
+      - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: atuin-bin
-          path: atuin/target/release/atuin.exe
+          name: atuin
+          path: C:\Users\runneradmin\.cargo\bin\atuin.exe
