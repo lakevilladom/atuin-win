@@ -24,8 +24,8 @@ jobs:
       # - run: |
       #     cd atuin
       #     cargo build --release
-      - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atuin
-          path: C:\Users\runneradmin\.cargo\bin\atuin.exe
+      # - name: 'Upload Artifact'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: atuin
+      #     path: C:\Users\runneradmin\.cargo\bin\atuin.exe
