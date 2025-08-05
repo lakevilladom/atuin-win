@@ -19,13 +19,12 @@ jobs:
       - run: pacman --noconfirm -Syu mingw-w64-ucrt-x86_64-rust mingw-w64-ucrt-x86_64-protobuf git
       
       - uses: Swatinem/rust-cache@v2
-  #      - run: git clone https://github.com/atuinsh/atuin.git
-      - run: cargo install --git https://github.com/atuinsh/atuin.git
-      # - run: |
-      #     cd atuin
-      #     cargo build --release
-      # - name: 'Upload Artifact'
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: atuin
-      #     path: C:\Users\runneradmin\.cargo\bin\atuin.exe
+      - run: git clone https://github.com/atuinsh/atuin.git
+      - run: |
+          cd atuin
+          cargo build --release
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atuin
+          path: ./atuin/target/release/atuin.exe
